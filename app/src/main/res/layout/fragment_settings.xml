@@ -4,61 +4,46 @@
              android:layout_height="match_parent"
              tools:context="com.dipesan.dani.debtcollector.Views.Settings.SettingsFragment">
 
-    <LinearLayout
+    <RelativeLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:orientation="vertical">
+        android:layout_marginLeft="10dp">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"></FrameLayout>
-
-            <Button
-                android:id="@+id/settings_device_button"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_build_black"
-                android:drawablePadding="20dp"
-                android:duplicateParentState="true"
-                android:gravity="fill"
-                android:text="Device"
-                android:textColor="@color/colorTextIcons"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/settings_device_button"
-                android:layout_marginLeft="50dp"
-                android:background="@color/colorPrimaryDark"/>
-            <Button
-                android:id="@+id/settings_sign_out_button"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_power_settings"
-                android:drawablePadding="20dp"
-                android:duplicateParentState="true"
-                android:gravity="fill"
-                android:text="Sign Out"
-                android:textColor="@color/colorTextIcons"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/settings_sign_out_button"
-                android:layout_marginLeft="50dp"
-                android:background="@color/colorPrimaryDark"/>
-        <ImageButton
-            android:id="@+id/main_settings_image_button"
+        <Button
+            android:drawablePadding="20dp"
+            android:gravity="fill"
+            android:id="@+id/settings_youcube_settings_button"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_power_settings"/>
-    </LinearLayout>
+            android:layout_height="50dp"
+            android:text="Sign Out"
+            android:drawableLeft="@drawable/ic_build_black"/>
+        <View
+            android:id="@+id/view1"
+            android:layout_alignBottom="@+id/settings_youcube_settings_button"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="50dp"
+            android:background="@color/colorPrimaryDark"/>
+
+
+        <Button
+            android:layout_below="@+id/view1"
+            android:drawablePadding="20dp"
+            android:gravity="fill"
+            android:id="@+id/settings_sign_out_button"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Sign Out"
+            android:drawableLeft="@drawable/ic_power_settings"/>
+            <View
+               android:layout_alignBottom="@+id/settings_sign_out_button"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="50dp"
+                android:background="@color/colorPrimaryDark"/>
+
+    </RelativeLayout>
 </FrameLayout>

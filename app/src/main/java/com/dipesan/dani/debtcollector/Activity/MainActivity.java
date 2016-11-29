@@ -2,8 +2,12 @@ package com.dipesan.dani.debtcollector.Activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -18,6 +22,11 @@ import com.dipesan.dani.debtcollector.Interfaces.MainPresenter;
 import com.dipesan.dani.debtcollector.Interfaces.MainView;
 import com.dipesan.dani.debtcollector.Presenters.MainPresenterImpl;
 import com.dipesan.dani.debtcollector.R;
+import com.dipesan.dani.debtcollector.services.BluetoothConnexionManager;
+import com.dipesan.dani.debtcollector.services.YoucubeService;
+import com.youTransactor.uCube.LogManager;
+import com.youTransactor.uCube.mdm.MDMManager;
+import com.youTransactor.uCube.rpc.RPCManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @BindView(R.id.main_progress_bar) ProgressBar mainProgressBar;
     private MainPresenter presenter;
     private ProgressDialog progressDialog;
+    private YoucubeService youcubeService;
 
     @BindView(R.id.main_customer_id_edit_text) EditText mainCustomerIdEditText;
     @BindView(R.id.main_proses_button) Button mainProsesButton;
@@ -43,7 +53,20 @@ public class MainActivity extends AppCompatActivity implements MainView {
         ButterKnife.bind(this);
         mainInformationCardView.setVisibility(View.INVISIBLE);
         presenter = new MainPresenterImpl(this);
+        youcubeService = new YoucubeService(this);
+        initBluetoothConnection();
     }
+    private void initBluetoothConnection() {
+        IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+        getBaseContext().registerReceiver(BluetoothConnexionManager.getInstance(), filter);
+        LogManager.initialize(this);
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        BluetoothConnexionManager.getInstance().initialize(settings);
+        MDMManager.getInstance().initialize(this);
+        RPCManager.getInstance().setConnexionManager(BluetoothConnexionManager.getInstance());
+    }
+
 
     @OnClick({R.id.main_settings_image_button, R.id.main_proses_button})
     public void onClick(View view) {
@@ -53,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 intentSettings.putExtra(MENU, MENU_SETTINGS);
                 startActivity(intentSettings);
                 overridePendingTransition(0, R.anim.fade_out);
+                finish();
                 break;
             case R.id.main_proses_button:
                 presenter.ValidationCustomerId(mainCustomerIdEditText.getText().toString());
@@ -102,11 +126,21 @@ public class MainActivity extends AppCompatActivity implements MainView {
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Transaksi Selesai", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-                mainInformationCardView.setVisibility(View.INVISIBLE);
-                mainCustomerIdEditText.setText(null);
-                Toast.makeText(MainActivity.this, "Print", Toast.LENGTH_SHORT).show();
+                youcubeService.setAmount(Double.parseDouble("5000000"));
+                youcubeService.setIsMessage(true);
+                youcubeService.setMessage("insert/swipe Card");
+                youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
+                    @Override
+                    public void onApproved() {
+                        Toast.makeText(MainActivity.this, "Transaksi Selesai", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                        mainInformationCardView.setVisibility(View.INVISIBLE);
+                        mainCustomerIdEditText.setText(null);
+                        Toast.makeText(MainActivity.this, "Print", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
             }
         });
     }

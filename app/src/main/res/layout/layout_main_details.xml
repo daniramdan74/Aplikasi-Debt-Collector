@@ -80,7 +80,7 @@
             android:layout_alignLeft="@+id/text5"
             android:layout_alignTop="@+id/text3"
             android:textStyle="bold"
-            android:text="500000"
+            android:text="5.000.000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView

@@ -1,5 +1,6 @@
 package com.dipesan.dani.debtcollector.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,16 +29,17 @@ public class MainDetailsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
         overridePendingTransition(0, R.anim.fade_out);
-        super.onBackPressed();
-
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     @Override
     public boolean onSupportNavigateUp() {
+        startActivity(new Intent(this, MainActivity.class));
         finish();
         overridePendingTransition(0, R.anim.fade_out);
-        return super.onSupportNavigateUp();
+//        return super.onSupportNavigateUp();
+return false;
     }
 }
