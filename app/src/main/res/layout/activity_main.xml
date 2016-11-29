@@ -21,7 +21,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcgher"/>
+                android:src="@mipmap/ic_launcher"/>
             <TextView
                 android:textSize="18dp"
                 android:textStyle="bold"
