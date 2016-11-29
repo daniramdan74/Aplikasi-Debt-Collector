@@ -10,11 +10,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.dipesan.dani.debtcollector.Activity.Login;
+import com.dipesan.dani.debtcollector.Activity.MainDetailsActivity;
 import com.dipesan.dani.debtcollector.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.dipesan.dani.debtcollector.Utils.AppConstant.MENU;
+import static com.dipesan.dani.debtcollector.Utils.AppConstant.MENU_YOUCUBE_SETTINGS;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,10 +51,15 @@ public class SettingsFragment extends Fragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.settings_youcube_settings_button:
+                Intent intentSettings = new Intent(getActivity(), MainDetailsActivity.class);
+                intentSettings.putExtra(MENU, MENU_YOUCUBE_SETTINGS);
+                startActivity(intentSettings);
+                getActivity().overridePendingTransition(0, R.anim.fade_out);
+                getActivity().finish();
                 break;
             case R.id.settings_sign_out_button:
-                Intent intentSettings = new Intent(getActivity(), Login.class);
-                startActivity(intentSettings);
+                Intent intent = new Intent(getActivity(), Login.class);
+                startActivity(intent);
                 getActivity().finish();
                 getActivity().overridePendingTransition(0, R.anim.fade_out);
                 break;
