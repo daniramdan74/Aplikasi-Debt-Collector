@@ -2,6 +2,7 @@ package com.dipesan.dani.debtcollector.Activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -21,6 +22,9 @@ import com.dipesan.dani.debtcollector.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.dipesan.dani.debtcollector.Utils.AppConstant.MENU;
+import static com.dipesan.dani.debtcollector.Utils.AppConstant.MENU_SETTINGS;
 
 public class MainActivity extends AppCompatActivity implements MainView {
     @BindView(R.id.main_information_card_view) CardView mainInformationCardView;
@@ -45,7 +49,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.main_settings_image_button:
-
+                Intent intentSettings = new Intent(this, MainDetailsActivity.class);
+                intentSettings.putExtra(MENU, MENU_SETTINGS);
+                startActivity(intentSettings);
+                overridePendingTransition(0, R.anim.fade_out);
                 break;
             case R.id.main_proses_button:
                 presenter.ValidationCustomerId(mainCustomerIdEditText.getText().toString());
