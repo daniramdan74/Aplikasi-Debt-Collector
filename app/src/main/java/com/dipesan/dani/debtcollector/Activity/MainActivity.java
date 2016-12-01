@@ -38,13 +38,12 @@ import static com.dipesan.dani.debtcollector.Utils.AppConstant.MENU_SETTINGS;
 public class MainActivity extends AppCompatActivity implements MainView {
     @BindView(R.id.main_information_card_view) CardView mainInformationCardView;
     @BindView(R.id.main_progress_bar) ProgressBar mainProgressBar;
-    private MainPresenter presenter;
-    private ProgressDialog progressDialog;
-    private YoucubeService youcubeService;
-
     @BindView(R.id.main_customer_id_edit_text) EditText mainCustomerIdEditText;
     @BindView(R.id.main_proses_button) Button mainProsesButton;
     @BindView(R.id.main_information_customer_relative_layout) RelativeLayout mainInformationCustomerRelativeLayout;
+    private MainPresenter presenter;
+    private ProgressDialog progressDialog;
+    private YoucubeService youcubeService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         youcubeService = new YoucubeService(this);
         initBluetoothConnection();
     }
+
     private void initBluetoothConnection() {
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         getBaseContext().registerReceiver(BluetoothConnexionManager.getInstance(), filter);
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public void onClickDetail() {
         LayoutInflater inflater = getLayoutInflater();
         View viewLayout = inflater.inflate(R.layout.layout_main_details, null);
-        final Button payButton=(Button)viewLayout.findViewById(R.id.main_details_pay_button);
+        final Button payButton = (Button) viewLayout.findViewById(R.id.main_details_pay_button);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(viewLayout);
         builder.setCancelable(true);
@@ -132,16 +132,32 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
                     @Override
                     public void onApproved() {
-                        Toast.makeText(MainActivity.this, "Transaksi Selesai", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
-                        mainInformationCardView.setVisibility(View.INVISIBLE);
-                        mainCustomerIdEditText.setText(null);
-                        Toast.makeText(MainActivity.this, "Print", Toast.LENGTH_SHORT).show();
+                        Print();
 
-
+//                        Toast.makeText(MainActivity.this, "Transaksi Selesai", Toast.LENGTH_SHORT).show();
+//                        mainInformationCardView.setVisibility(View.INVISIBLE);
+//                        mainCustomerIdEditText.setText(null);
+//                        Toast.makeText(MainActivity.this, "Print", Toast.LENGTH_SHORT).show();
                     }
                 });
+                }
             }
-        });
+
+            );
+        }
+
+    private void Print() {
+        LayoutInflater inflater = getLayoutInflater();
+        View viewLayout = inflater.inflate(R.layout.print_receipt, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(viewLayout);
+        builder.setCancelable(true);
+        final AlertDialog dialog = builder.create();
+        Toast.makeText(MainActivity.this, "Transaksi Selesai", Toast.LENGTH_SHORT).show();
+        mainInformationCardView.setVisibility(View.INVISIBLE);
+        mainCustomerIdEditText.setText(null);
+        dialog.show();
+
     }
 }

@@ -33,14 +33,14 @@ public class Login extends AppCompatActivity implements LoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        imageView = (ImageView) findViewById(R.id.login_image_view_logo);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Login.this, MainActivity.class));
-                finish();
-            }
-        });
+//        imageView = (ImageView) findViewById(R.id.login_image_view_logo);
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(Login.this, MainActivity.class));
+//                finish();
+//            }
+//        });
         presenter = new LoginPresenterImpl(this);
     }
 
